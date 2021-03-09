@@ -1,10 +1,18 @@
 const express = require('express')
-const bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+var cors = require('cors');
 const app = express()
 const port = process.env.PORT || 8081
+const router = express.Router();
+
+
 
 var path = require('path');
 const { dirname } = require('path')
+
+app.use(cors({
+    origin: 'http://localhost:8081/'
+  }));
 
 var knex = require('knex')({
     client: 'mysql',
@@ -19,7 +27,8 @@ var knex = require('knex')({
 //app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.set(express.static(__dirname + "/public"))
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + "/views"))
 
@@ -38,7 +47,6 @@ app.get('/veiculo', async function (req, res) {
   }); 
 
 app.post('/create', (req, res, next) => {
-
     knex('rest')
         .insert(req.body)
         .then((dados) => {
@@ -48,7 +56,6 @@ app.post('/create', (req, res, next) => {
 });
 
 app.get('/show/:idVeiculo', (req, res, next) => {
-
     const { idVeiculo } = req.params;
     knex('veiculo')
         .where('idVeiculo', idVeiculo)
@@ -60,9 +67,7 @@ app.get('/show/:idVeiculo', (req, res, next) => {
 });
 
 app.put('/update/:id', (req, res, next) => {
-
     const { id } = req.params;
-
     knex('rest')
         .where('id', id)
         .update(req.body)
@@ -73,16 +78,15 @@ app.put('/update/:id', (req, res, next) => {
 
 });
 
-app.delete('/delete/:id', (req, res, next) => {
-
-    const { id } = req.params;
-
-    knex('rest')
-        .where('id', id)
-        .delete()
-        .then((dados) => {
-            if (!dados) return res.send(new errs.BadRequestError('nada foi encontrado'))
+app.delete('/veiculo/excluir/:idVeiculo', (req, res) => {
+    const { idVeiculo } = req.params;
+    knex('veiculo')
+        .where('idVeiculo', idVeiculo)
+        .delete(req.body)
+        .then((data) => {
+            if (!data) return res.send(new errs.BadRequestError('nada foi encontrado'))
             res.send('dados excluidos');
-        }, next)
+            res.redirect('/veiculo/');
+        })
 
 })

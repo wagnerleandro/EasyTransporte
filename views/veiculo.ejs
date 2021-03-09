@@ -327,11 +327,9 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive col-md-12">
+                            <div class="table-responsive">
                                 <div id="grid">
-                                    <div class="table-responsive col-md-12">
-                                        <table id="listar-veiculos" class="table table-striped" cellspacing="0"
-                                            cellpadding="0">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">            
                                             <thead>
                                                 <tr>
                                                     <th>id</th>
@@ -347,17 +345,15 @@
                                                            <td><%= veiculo.idVeiculo %></td>
                                                             <td><%= veiculo.placa %></td>
                                                             <td><%= veiculo.kmAtual %></td>
-                                                            <td><%= veiculo.status %></td>
                                                             
                                                             
-                                                            <td class="actions">
+                                                            
+                                                            <td class="/veiculo" method="POST">
                                                                 <a class="btn btn-success btn-xs"
                                                                     href="view.html">Visualizar</a>
                                                                 <a class="btn btn-warning btn-xs"
                                                                     href="edit.html">Editar</a>
-                                                                <a class="btn btn-danger btn-xs" href="#"
-                                                                    data-toggle="modal"
-                                                                    data-target="#delete-modal">Excluir</a>
+                                                                <a class="btn btn-danger btn-xs" <a href='/veiculo/excluir/<%= veiculo.idVeiculo%>' data-confirm='Tem certeza de que deseja excluir o item selecionado?'>Apagar</a>
                                                             </td>
                                                         </tr>
                                                         <% }) %>
@@ -365,7 +361,7 @@
                                             </tbody>
 
                                         </table>
-                                    </div>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -427,7 +423,8 @@
         <!-- Custom scripts for all pages-->
         <script src="js/sb-admin-2.min.js"></script>
 
-
+        <!--Função js-->
+        <script src="js/personalizado.js"></script>
 
         <!-- Page level plugins -->
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
