@@ -352,8 +352,8 @@
                                                                 <a class="btn btn-success btn-xs"
                                                                     href="view.html">Visualizar</a>
                                                                 <a class="btn btn-warning btn-xs"
-                                                                    href="edit.html">Editar</a>
-                                                                <a class="btn btn-danger btn-xs" <a href='/veiculo/excluir/<%= veiculo.idVeiculo%>' data-confirm='Tem certeza de que deseja excluir o item selecionado?'>Apagar</a>
+                                                                    href="/veiculo/editar/<%= veiculo.idVeiculo%>">Editar</a>
+                                                                    <a class="btn btn-danger btn-xs" <a href='/excluir/<%= veiculo.idVeiculo%>' data-confirm='Tem certeza de que deseja excluir o item selecionado?'>Apagar</a>
                                                             </td>
                                                         </tr>
                                                         <% }) %>
@@ -413,6 +413,8 @@
             </div>
         </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -424,7 +426,7 @@
         <script src="js/sb-admin-2.min.js"></script>
 
         <!--Função js-->
-        <script src="js/personalizado.js"></script>
+        <script src="/js/personalizado.js"></script>
 
         <!-- Page level plugins -->
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
@@ -432,7 +434,11 @@
 
         <!-- Page level custom scripts -->
         <script src="js/demo/datatables-demo.js"></script>
+        <script src="js/index.js"></script>
 
+        
+      
+        
 
 </body>
 

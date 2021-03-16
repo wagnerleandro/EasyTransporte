@@ -4,7 +4,7 @@ var cors = require('cors');
 const app = express()
 const port = process.env.PORT || 8081
 const router = express.Router();
-
+const routes = require('./routes/veiculo')
 
 
 var path = require('path');
@@ -12,7 +12,7 @@ const { dirname } = require('path')
 
 app.use(cors({
     origin: 'http://localhost:8081/'
-  }));
+}));
 
 var knex = require('knex')({
     client: 'mysql',
@@ -23,28 +23,46 @@ var knex = require('knex')({
         database: 'db'
     }
 });
-
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+var jsonParser = bodyParser.json();
 //app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.set(express.static(__dirname + "/public"))
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + "/views"))
+app.use('/', routes)
 
 app.listen(port, () => {
     console.log(` http://localhost:${port}`)
 })
 
 
+app.get('/', (req, res) => {
+    res.render('veiculo', {
+        page_title: 'Veiculos',
+    })
+});
+
+
+app.post('/veiculo/editar/:idVeiculo', async function (req, res) {
+    const dados = await knex.select().from('veiculo');
+    res.render('editarveiculo', {
+        page_title : 'Editar Veiculo',
+        data: dados
+    });
+});
+
+
 // rotas REST
 app.get('/veiculo', async function (req, res) {
     const dados = await knex.select('idVeiculo', 'placa', 'kmAtual', 'status').from('veiculo');
     res.render('veiculo', {
-      page_title: 'Veiculos',
-      data: dados
+        page_title: 'Veiculos',
+        data: dados
     }); //
-  }); 
+});
+
 
 app.post('/create', (req, res, next) => {
     knex('rest')
@@ -55,16 +73,6 @@ app.post('/create', (req, res, next) => {
 
 });
 
-app.get('/show/:idVeiculo', (req, res, next) => {
-    const { idVeiculo } = req.params;
-    knex('veiculo')
-        .where('idVeiculo', idVeiculo)
-        .then((dados) => {
-            if (!dados) return res.send(new errs.BadRequestError('nada foi encontrado'))
-            res.send(dados);
-        }, next)
-
-});
 
 app.put('/update/:id', (req, res, next) => {
     const { id } = req.params;
@@ -78,15 +86,8 @@ app.put('/update/:id', (req, res, next) => {
 
 });
 
-app.delete('/veiculo/excluir/:idVeiculo', (req, res) => {
-    const { idVeiculo } = req.params;
-    knex('veiculo')
-        .where('idVeiculo', idVeiculo)
-        .delete(req.body)
-        .then((data) => {
-            if (!data) return res.send(new errs.BadRequestError('nada foi encontrado'))
-            res.send('dados excluidos');
-            res.redirect('/veiculo/');
-        })
 
-})
+
+
+
+
