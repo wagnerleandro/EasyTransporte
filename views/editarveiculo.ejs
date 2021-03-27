@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
     <title>Easy Transporte - Veículos</title>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
     <!-- Custom fonts for this template -->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -23,6 +23,9 @@
     <!-- Custom styles for this page -->
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="/css/bootstrap4-toggle.min.css" rel="stylesheet">
+
+    
+
 
 </head>
 
@@ -324,8 +327,19 @@
                         </div>
                         <div class="card-body">
                             <% data.forEach(function(editarVeiculo){ %>
+                                
+                                <script>
+                                    var dataAquisicao = "<%= editarVeiculo.dataAquisicao %>" 
+                                    var ano = "<%= editarVeiculo.ano %> "
+                                    var combustivel = "<%= editarVeiculo.combustivel %> "
+                                    
+                                  
+                                           
+                                 </script>
+
                             <div id="grid">
                                 <div class="row">
+                                    <form action="/veiculo/editar/<%= editarVeiculo.idVeiculo %>" method="POST">
                                     <div class="form-group col-md-2">
                                         <label for=""></label>
                                         <input type="checkbox" name="status" id="status" data-on="Ativo" data-off="Desativado" checked data-toggle="toggle"
@@ -356,7 +370,8 @@
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label for="">Combustivel</label>
-                                        <select name="combustivel" id="combustivel" value="<%= editarVeiculo.combustivel %>" class="custom-select">Selecione
+                                        <select name="combustivel" id="combustivel" value="<%= editarVeiculo.combustivel %>"  class="custom-select">Selecione
+                                            <option value="<%= editarVeiculo.combustivel %> ">"<%= editarVeiculo.combustivel %>"</option>
                                             <option value="Alcool">Alcool</option>
                                             <option value="Diesel">Diesel</option>
                                             <option value="Gasolina">Gasolina</option>
@@ -370,8 +385,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-2">
-                                        <label for="">Data de Aquisição</label>
-                                        <input type="date" name="dataAquisicao" id="Data" value="<%= editarVeiculo.dataAquisicao %>" class="form-control">
+                                        <label for="" id="lblidade">Data de Aquisição</label>
+                                        <input type="date" name="dataAquisicao"  id="dataAquisicao" value="<%= editarVeiculo.dataAquisicao %>" class="form-control">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label for="">Renavam</label>
@@ -379,14 +394,16 @@
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label for="">Ano veículo</label>
-                                        <input type="text" name="ano" id="ano" value="<%= editarVeiculo.ano %>" class="form-control">
+                                        <input type="date" name="ano" id="ano" value="<%= editarVeiculo.ano %>" class="form-control">
                                     </div>
                                 </div>
-
-                                <% }) %>
-
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-success">Atualizar</button>
+                            </form>
                             </div>
                         </div>
+                        <% }) %>
 
                     </div>
                     <!-- /.container-fluid -->
@@ -460,6 +477,7 @@
         <script src="/js/demo/datatables-demo.js"></script>
         <script src="/js/index.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+        <script src="/js/moment.min.js"></script>
        
 
 

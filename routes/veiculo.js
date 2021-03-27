@@ -5,5 +5,6 @@ const veiculoController = require('../controllers/veiculoControllers');
 
 router.get('/excluir/:idVeiculo', veiculoController.delete);
 router.get('/veiculo/editar/:idVeiculo', veiculoController.edit);
+router.post('/veiculo/editar/:idVeiculo', veiculoController.update);
 
 module.exports = router;

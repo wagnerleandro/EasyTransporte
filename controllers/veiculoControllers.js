@@ -16,12 +16,21 @@ controller.edit = (req, res, next) => {
         .then((dados) => {
             if (!dados) return res.send(new errs.BadRequestError('nada foi encontrado'))
             res.render('editarveiculo', {
-                page_title : 'Editar Veiculo',
+                page_title: 'Editar Veiculo',
                 data: dados
             });
             res.send(dados);
         }, next)
-    };
+};
+controller.update = (req, res, next) => {
+    const { idVeiculo } = req.params;
+    knex('veiculo').update({placa: req.body.placa}).where('idVeiculo', idVeiculo)
+    .then( function (result) {
+        //res.json({ success: true, message: 'ok' });     
+            res.redirect('/veiculo');
+        }, next)
+
+};
 
 controller.delete = (req, res) => {
     const { idVeiculo } = req.params;
@@ -29,10 +38,10 @@ controller.delete = (req, res) => {
         .where('idVeiculo', idVeiculo)
         .delete(req.body)
         .then((data) => {
-            if (!data) return res.send(new errs.BadRequestError('nada foi encontrado'))     
+            if (!data) return res.send(new errs.BadRequestError('nada foi encontrado'))
             res.redirect('/veiculo');
         })
-    };
-    
-    
+};
+
+
 module.exports = controller;

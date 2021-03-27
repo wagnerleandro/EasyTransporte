@@ -77,8 +77,8 @@ app.post('/create', (req, res, next) => {
 app.put('/update/:id', (req, res, next) => {
     const { id } = req.params;
     knex('rest')
+    .update(req.body)
         .where('id', id)
-        .update(req.body)
         .then((dados) => {
             if (!dados) return res.send(new errs.BadRequestError('nada foi encontrado'))
             res.send('dados atualizados');
