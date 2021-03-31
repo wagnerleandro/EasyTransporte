@@ -22,15 +22,23 @@ controller.edit = (req, res, next) => {
             res.send(dados);
         }, next)
 };
+
 controller.update = (req, res, next) => {
     const { idVeiculo } = req.params;
-    knex('veiculo').update({placa: req.body.placa}).where('idVeiculo', idVeiculo)
-    .then( function (result) {
-        //res.json({ success: true, message: 'ok' });     
-            res.redirect('/veiculo');
-        }, next)
+    const veiculo = req.body;
+    knex('veiculo').update(veiculo).where('idVeiculo', idVeiculo)
+        .then((dados) => {
+            if (dados) {
+                res.json({ success: true, message: 'ok' })
+                res.redirect('/veiculo');
+            } else {
+                return res.json({ success: false, message: 'erro' });
+            }
 
+        }, next)
 };
+
+
 
 controller.delete = (req, res) => {
     const { idVeiculo } = req.params;

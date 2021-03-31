@@ -33,6 +33,17 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + "/views"))
 app.use('/', routes)
 
+
+
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+  });
+
+
 app.listen(port, () => {
     console.log(` http://localhost:${port}`)
 })
@@ -74,17 +85,7 @@ app.post('/create', (req, res, next) => {
 });
 
 
-app.put('/update/:id', (req, res, next) => {
-    const { id } = req.params;
-    knex('rest')
-    .update(req.body)
-        .where('id', id)
-        .then((dados) => {
-            if (!dados) return res.send(new errs.BadRequestError('nada foi encontrado'))
-            res.send('dados atualizados');
-        }, next)
 
-});
 
 
 
