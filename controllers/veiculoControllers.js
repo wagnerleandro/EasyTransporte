@@ -9,6 +9,24 @@ var knex = require('knex')({
     }
 });
 
+//#region  Listar Veiculos
+controller.list = (req, res, next) => {
+    const { idVeiculo } = req.params;
+    knex('veiculo')
+        .where('idVeiculo', idVeiculo)
+        .then((dados) => {
+            if (!dados) return res.send(new errs.BadRequestError('nada foi encontrado'))
+            res.render('listarveiculo', {
+                page_title: 'Listar Veiculo',
+                data: dados
+            });
+            res.send(dados);
+        }, next)
+};
+//#endregion
+
+
+//#region  Editar Veiculo
 controller.edit = (req, res, next) => {
     const { idVeiculo } = req.params;
     knex('veiculo')
@@ -22,24 +40,26 @@ controller.edit = (req, res, next) => {
             res.send(dados);
         }, next)
 };
+//#endregion
 
+//#region  Atualizar Veiculo
 controller.update = (req, res, next) => {
     const { idVeiculo } = req.params;
     const veiculo = req.body;
-    knex('veiculo').update(veiculo).where('idVeiculo', idVeiculo)
+    knex('veiculo').select(veiculo).where('idVeiculo', idVeiculo)
         .then((dados) => {
             if (dados) {
                 res.json({ success: true, message: 'ok' })
-                res.redirect('/veiculo');
             } else {
                 return res.json({ success: false, message: 'erro' });
             }
 
         }, next)
 };
+//#endregion
 
 
-
+//#region  Deletar Veiculo
 controller.delete = (req, res) => {
     const { idVeiculo } = req.params;
     knex('veiculo')
@@ -50,6 +70,7 @@ controller.delete = (req, res) => {
             res.redirect('/veiculo');
         })
 };
+//#endregion
 
 
 module.exports = controller;
