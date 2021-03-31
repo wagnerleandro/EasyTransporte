@@ -4,7 +4,6 @@ var cors = require('cors');
 const app = express()
 const port = process.env.PORT || 8081
 const router = express.Router();
-const routes = require('./routes/veiculo')
 
 
 var path = require('path');
@@ -31,6 +30,8 @@ app.set(express.static(__dirname + "/public"))
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + "/views"))
+app.use(express.json())
+const routes = require('./routes/veiculo')
 app.use('/', routes)
 
 
@@ -54,6 +55,27 @@ app.get('/', (req, res) => {
         page_title: 'Veiculos',
     })
 });
+
+
+app.get('/forgot-password', (req, res) => {
+    res.render('forgot-password', {
+        page_title: 'Veiculos',
+    })
+});
+
+app.get('/login', (req, res) => {
+    res.render('login', {
+        page_title: 'Veiculos',
+    })
+});
+
+app.get('/register', (req, res) => {
+    res.render('register', {
+        page_title: 'Veiculos',
+    })
+});
+
+
 
 
 app.post('/veiculo/editar/:idVeiculo', async function (req, res) {
