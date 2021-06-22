@@ -4,7 +4,10 @@ var cors = require('cors');
 const app = express()
 const port = process.env.PORT || 8081
 const router = express.Router();
-
+const jwt = require('jsonwebtoken');
+const SECRECT = '10203050'
+const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 var path = require('path');
 const { dirname } = require('path')
@@ -31,8 +34,14 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + "/views"))
 app.use(express.json())
-const routes = require('./routes/veiculo')
-app.use('/', routes)
+const routesVeiculo = require('./routes/veiculo')
+const routesMotorista = require('./routes/motorista')
+const routesUsuario = require('./routes/usuario')
+const routesCliente = require('./routes/cliente')
+app.use('/', routesVeiculo)
+app.use('/', routesMotorista)
+app.use('/', routesUsuario)
+app.use('/', routesCliente)
 
 
 
@@ -57,25 +66,44 @@ app.get('/', (req, res) => {
 });
 
 
+
+
+
+
 app.get('/forgot-password', (req, res) => {
     res.render('forgot-password', {
         page_title: 'Veiculos',
     })
 });
 
-app.get('/login', (req, res) => {
-    res.render('login', {
-        page_title: 'Veiculos',
-    })
-});
+
 
 app.get('/register', (req, res) => {
+   
     res.render('register', {
         page_title: 'Veiculos',
     })
 });
 
+app.get('/cliente/adicionarcliente', (req, res) => {
+    res.render('adicionarcliente', {
+        page_title: 'Adicionar Cliente',
+    })
+});
 
+
+app.get('/veiculo/adicionarveiculo', (req, res) => {
+    res.render('adicionarveiculo', {
+        page_title: 'Adicionar Veiculo',
+    })
+});
+
+app.get('/login', (req, res) => {
+   
+    res.render('login', {
+        page_title: 'Login',
+    })
+});
 
 
 app.post('/veiculo/editar/:idVeiculo', async function (req, res) {
@@ -87,6 +115,7 @@ app.post('/veiculo/editar/:idVeiculo', async function (req, res) {
 });
 
 
+
 // rotas REST
 app.get('/veiculo', async function (req, res) {
     const dados = await knex.select('idVeiculo', 'placa', 'kmAtual', 'status').from('veiculo');
@@ -95,6 +124,14 @@ app.get('/veiculo', async function (req, res) {
         data: dados
     }); //
 });
+
+app.get('/motorista/adicionarmotorista', (req, res) => {
+    res.render('adicionarmotorista', {
+        page_title: 'Adicionar Motorista',
+    })
+});
+
+
 
 
 app.post('/create', (req, res, next) => {
@@ -108,6 +145,14 @@ app.post('/create', (req, res, next) => {
 
 
 
+
+app.get('/motorista', async function (req, res) {
+    const dados = await knex.select('idCadastro', 'cpf', 'rg','nome', 'status').from('motorista');
+    res.render('motorista', {
+        page_title: 'Motorista',
+        data: dados
+    }); //
+});
 
 
 

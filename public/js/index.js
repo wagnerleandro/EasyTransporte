@@ -9,3 +9,5 @@ function deleteRowById(idVeiculo) {
         }
     });
 }
+
+

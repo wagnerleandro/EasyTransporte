@@ -17,6 +17,7 @@
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 </head>
 
@@ -34,28 +35,29 @@
               <div class="text-center">
                 <h1 class="h4 text-gray-900 mb-4">Criar Conta!</h1>
               </div>
+              <form action="/cadastro" method="POST" id="create_Usuario">
               <form class="user">
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
-                    <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="Primeiro">
+                    <input type="text" class="form-control form-control-user" name="nome" id="nome" placeholder="Primeiro">
                   </div>
                   <div class="col-sm-6">
                     <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Sobrenome">
                   </div>
                 </div>
                 <div class="form-group">
-                  <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Endereço de Email">
+                  <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Endereço de Email">
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
-                    <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Senha">
+                    <input type="password" class="form-control form-control-user"  name="password" id="password" placeholder="Senha">
                   </div>
                   <div class="col-sm-6">
                     <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Confirmar senha">
                   </div>
                 </div>
-                <a href="login.html" class="btn btn-primary btn-user btn-block">
-                  Criar conta
+                <button type="submit" class="btn btn-primary"> Criar conta</button>
+                 
                 </a>
               
               </form>
@@ -73,7 +75,8 @@
     </div>
 
   </div>
-
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/js/usuario.js"> </script>
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -9,6 +9,20 @@ var knex = require('knex')({
     }
 });
 
+//#region  Criar Veiculos
+
+controller.create = (req, res) => {
+    knex('veiculo')
+        .insert(req.body)
+        .then((data) => {
+            if (!data) return res.send(new errs.BadRequestError('nada foi encontrado'))
+            res.redirect('/veiculo');
+        })
+}
+
+//#endregion
+
+
 //#region  Listar Veiculos
 controller.list = (req, res, next) => {
     const { idVeiculo } = req.params;
@@ -41,6 +55,7 @@ controller.edit = (req, res, next) => {
         }, next)
 };
 //#endregion
+
 
 //#region  Atualizar Veiculo
 controller.update = (req, res, next) => {
